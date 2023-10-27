@@ -16,6 +16,16 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
+  Color color = Colors.indigo;
+  // get color {
+  //   return _color;
+  // }
+
+  void updateColor(Color newColor) {
+    color = newColor;
+    notifyListeners();
+  }
+
   List<Product> get favoriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }

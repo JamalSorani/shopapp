@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/main.dart';
+import 'package:shopapp/providers/products.dart';
 
 import '../providers/orders.dart' show Orders;
+import '../providers/product.dart';
 import '../widgets/order_item.dart';
 import '../widgets/app_drawer.dart';
 
@@ -13,6 +15,7 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Provider.of<Products>(context, listen: false).color;
     return WillPopScope(
       onWillPop: () async {
         return await showDialog(
@@ -54,7 +57,7 @@ class OrdersScreen extends StatelessWidget {
           backgroundColor: color,
           title: const Text('Your Orders'),
         ),
-        drawer: const AppDrawer(),
+        drawer: AppDrawer(),
         body: FutureBuilder(
           future:
               Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),

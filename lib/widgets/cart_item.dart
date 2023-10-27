@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/main.dart';
+import 'package:shopapp/providers/products.dart';
 
 import '../providers/cart.dart';
+import '../providers/product.dart';
 
 class CartItem extends StatelessWidget {
   final String id;
@@ -16,6 +18,7 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Provider.of<Products>(context, listen: false).color;
     return Dismissible(
       key: ValueKey(id),
       background: Container(

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 import '../providers/cart.dart';
 
+import '../providers/product.dart';
 import '../providers/products.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
+    final color = Provider.of<Products>(context, listen: false).color;
     final loadedProduct = Provider.of<Products>(
       context,
       listen: false,

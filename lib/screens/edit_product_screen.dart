@@ -126,6 +126,7 @@ class EditProductScreenState extends State<EditProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color = Provider.of<Products>(context, listen: false).color;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: color,

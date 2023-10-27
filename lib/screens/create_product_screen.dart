@@ -113,6 +113,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color = Provider.of<Products>(context, listen: false).color;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: color,

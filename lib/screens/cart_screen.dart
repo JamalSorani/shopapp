@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/main.dart';
+import 'package:shopapp/providers/products.dart';
 
 import '../providers/cart.dart' show Cart;
+import '../providers/product.dart';
 import '../widgets/cart_item.dart';
 import '../providers/orders.dart';
 
@@ -14,6 +16,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final color = Provider.of<Products>(context, listen: false).color;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: color,
@@ -80,6 +83,7 @@ class OrderButtonState extends State<OrderButton> {
 
   @override
   Widget build(BuildContext context) {
+    final color = Provider.of<Products>(context, listen: false).color;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: color),
       onPressed: (widget.cart.totalAmount <= 0 || _isLoading)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopapp/providers/product.dart';
 import 'package:shopapp/screens/auth_screen.dart';
 import 'package:shopapp/screens/create_product_screen.dart';
 
@@ -16,7 +17,7 @@ import 'screens/edit_product_screen.dart';
 import 'screens/splash_screen.dart';
 
 const String adminId = '1gawj2Z4C3PGkGuHOvNavXB72302';
-Color color = Colors.indigo;
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {

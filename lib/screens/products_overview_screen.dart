@@ -1,10 +1,7 @@
-// ignore_for_file: constant_identifier_names, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
-
-import '../main.dart';
+import 'package:shopapp/providers/product.dart';
 
 import '../widgets/app_drawer.dart';
 import '../widgets/products_list.dart';
@@ -15,8 +12,8 @@ import '../providers/products.dart';
 var _isInit = true;
 
 enum FilterOptions {
-  Favorites,
-  All,
+  favorites,
+  all,
 }
 
 class ProductsOverviewScreen extends StatefulWidget {
@@ -24,16 +21,16 @@ class ProductsOverviewScreen extends StatefulWidget {
 
   const ProductsOverviewScreen({super.key, required this.userId});
   @override
-  _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
+  ProductsOverviewScreenState createState() => ProductsOverviewScreenState();
 }
 
-class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+class ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
   var isLoading = false;
 
-  Future<void> _refresh(BuildContext context) async {
-    await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-  }
+  // Future<void> _refresh(BuildContext context) async {
+  //   await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+  // }
 
   @override
   void didChangeDependencies() {
@@ -57,6 +54,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color color = Provider.of<Products>(context).color;
+
+    Color oldColor = color;
     return WillPopScope(
       onWillPop: () async {
         return await showDialog(
@@ -105,17 +105,23 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
+                  builder: (c) => AlertDialog(
                     title: const Text('Change another color'),
                     content: MaterialColorPicker(
+                      selectedColor: oldColor,
                       onColorChange: (value) {
-                        color = value;
+                        oldColor = color;
+                        Provider.of<Products>(context, listen: false)
+                            .updateColor(value);
                       },
                     ),
                     actions: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(backgroundColor: color),
                         onPressed: () {
+                          Provider.of<Products>(context, listen: false)
+                              .updateColor(oldColor);
+
                           Navigator.of(context).pop();
                         },
                         child: const Text('Cancel'),
@@ -123,9 +129,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(backgroundColor: color),
                         onPressed: () {
-                          setState(() {
-                            color;
-                          });
+                          oldColor = color;
+
                           Navigator.of(context).pop();
                         },
                         child: const Text('Submit'),
@@ -155,7 +160,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             PopupMenuButton(
               onSelected: (FilterOptions selectedValue) {
                 setState(() {
-                  if (selectedValue == FilterOptions.Favorites) {
+                  if (selectedValue == FilterOptions.favorites) {
                     _showOnlyFavorites = true;
                   } else {
                     _showOnlyFavorites = false;
@@ -167,11 +172,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
               itemBuilder: (_) => [
                 const PopupMenuItem(
-                  value: FilterOptions.Favorites,
+                  value: FilterOptions.favorites,
                   child: Text('Only Favorites'),
                 ),
                 const PopupMenuItem(
-                  value: FilterOptions.All,
+                  value: FilterOptions.all,
                   child: Text('Show All'),
                 ),
               ],
@@ -185,11 +190,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   color: Colors.white,
                 ),
               )
-            : RefreshIndicator(
-                color: color,
-                onRefresh: () => _refresh(context),
-                child: ProductsList(_showOnlyFavorites),
-              ),
+            : ProductsList(_showOnlyFavorites),
       ),
     );
   }
