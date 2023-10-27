@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:shopapp/providers/product.dart';
-
 import '../widgets/app_drawer.dart';
 import '../widgets/products_list.dart';
 import '../providers/cart.dart';

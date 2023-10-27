@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../main.dart';
 import '../providers/auth.dart';
 import '../providers/products.dart';
 import '../screens/product_detail_screen.dart';
 import '../providers/product.dart';
 import '../providers/cart.dart';
 
-class ProductItem extends StatelessWidget {
+class ProductItem extends StatefulWidget {
   const ProductItem({super.key});
 
+  @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
@@ -40,66 +44,65 @@ class ProductItem extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            Positioned(
-              top: 0.0,
-              left: 0.0,
-              child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 30),
-                height: 200.0,
-                width: 200.0,
-                child: Column(
-                  children: [
-                    Image.network(
-                      product.imageUrl,
-                      fit: BoxFit.fill,
-                      height: 140,
-                      width: 200,
-                      //               ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Consumer<Product>(
-                          builder: (ctx, product, _) => IconButton(
-                            icon: Icon(
-                              product.isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                            ),
-                            color: color,
-                            onPressed: () {
-                              product.toggleFavoriteStatus(
-                                  authData.token!, authData.userId);
-                            },
+            Container(
+              padding: EdgeInsets.only(
+                  left: 20,
+                  right: 30,
+                  top: MediaQuery.of(context).size.height * 0.5),
+              height: 200.0,
+              width: 200.0,
+              child: Column(
+                children: [
+                  Image.network(
+                    product.imageUrl,
+                    fit: BoxFit.fill,
+                    height: 140,
+                    width: 200,
+                    //               ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Consumer<Product>(
+                        builder: (ctx, product, _) => IconButton(
+                          icon: Icon(
+                            product.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
                           ),
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.shopping_cart,
-                          ),
-                          onPressed: () {
-                            cart.addItem(
-                                product.id, product.price, product.title);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: const Text('Added to cart...'),
-                                duration: const Duration(seconds: 2),
-                                action: SnackBarAction(
-                                    textColor: color,
-                                    label: 'undo',
-                                    onPressed: () {
-                                      cart.removeSingleItem(product.id);
-                                    }),
-                              ),
-                            );
-                          },
                           color: color,
+                          onPressed: () {
+                            product.toggleFavoriteStatus(
+                                authData.token!, authData.userId);
+                          },
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.shopping_cart,
+                        ),
+                        onPressed: () {
+                          cart.addItem(
+                              product.id, product.price, product.title);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Added to cart...'),
+                              duration: const Duration(seconds: 2),
+                              action: SnackBarAction(
+                                  textColor: color,
+                                  label: 'undo',
+                                  onPressed: () {
+                                    cart.removeSingleItem(product.id);
+                                  }),
+                            ),
+                          );
+                        },
+                        color: color,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Positioned(
