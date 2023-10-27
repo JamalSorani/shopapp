@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/products.dart';
-import './product_item.dart';
+import 'list_item.dart';
 
 class ProductsList extends StatelessWidget {
   final bool showFavs;
@@ -36,7 +36,7 @@ class ProductsList extends StatelessWidget {
                   itemBuilder: (ctx, i) => products[i].isVisible
                       ? ChangeNotifierProvider.value(
                           value: products[i],
-                          child: const ProductItem(),
+                          child: const ListItem(),
                         )
                       : const SizedBox(),
                 ),

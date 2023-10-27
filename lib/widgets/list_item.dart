@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
@@ -8,14 +7,14 @@ import '../screens/product_detail_screen.dart';
 import '../providers/product.dart';
 import '../providers/cart.dart';
 
-class ProductItem extends StatefulWidget {
-  const ProductItem({super.key});
+class ListItem extends StatefulWidget {
+  const ListItem({super.key});
 
   @override
-  State<ProductItem> createState() => _ProductItemState();
+  State<ListItem> createState() => _ListItemState();
 }
 
-class _ProductItemState extends State<ProductItem> {
+class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
@@ -49,7 +48,10 @@ class _ProductItemState extends State<ProductItem> {
               top: 0,
               left: 0,
               child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 30),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 30,
+                ),
                 height: 200.0,
                 width: 200.0,
                 child: Column(
@@ -133,13 +135,10 @@ class _ProductItemState extends State<ProductItem> {
                           vertical: 5 / 5,
                         ),
                         decoration: BoxDecoration(
-                          color: color,
+                          color: const Color(0xFFfcca46),
                           borderRadius: BorderRadius.circular(22),
                         ),
-                        child: Text(
-                          ' \$${product.price}',
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                        child: Text(' \$${product.price}'),
                       ),
                     ),
                   ],

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopapp/main.dart';
+
 import 'package:shopapp/providers/products.dart';
 
 import '../providers/orders.dart' show Orders;
-import '../providers/product.dart';
+
 import '../widgets/order_item.dart';
 import '../widgets/app_drawer.dart';
 
@@ -57,16 +57,15 @@ class OrdersScreen extends StatelessWidget {
           backgroundColor: color,
           title: const Text('Your Orders'),
         ),
-        drawer: AppDrawer(),
+        drawer: const AppDrawer(),
         body: FutureBuilder(
           future:
               Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
           builder: (ctx, dataSnapshot) {
             if (dataSnapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                  child: CircularProgressIndicator(
-                color: color,
-              ));
+                child: CircularProgressIndicator(color: color),
+              );
             } else {
               if (dataSnapshot.error != null) {
                 return const Center(

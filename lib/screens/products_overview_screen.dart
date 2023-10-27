@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
+
 import '../widgets/app_drawer.dart';
 import '../widgets/products_list.dart';
 import '../providers/cart.dart';
@@ -26,12 +27,12 @@ class ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
   var isLoading = false;
 
-  // Future<void> _refresh(BuildContext context) async {
-  //   await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-  // }
+  Future<void> _refresh(BuildContext context) async {
+    await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+  }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (_isInit) {
       setState(() {
         isLoading = true;
@@ -39,7 +40,7 @@ class ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
       Provider.of<Products>(context, listen: false)
           .fetchAndSetProducts()
-          .then((_) {
+          .then((_) async {
         setState(() {
           isLoading = false;
           _isInit = false;
@@ -54,7 +55,7 @@ class ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     Color color = Provider.of<Products>(context).color;
 
-    Color oldColor = color;
+    var oldColor = color;
     return WillPopScope(
       onWillPop: () async {
         return await showDialog(
@@ -188,7 +189,10 @@ class ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   color: Colors.white,
                 ),
               )
-            : ProductsList(_showOnlyFavorites),
+            : RefreshIndicator(
+                color: color,
+                onRefresh: () => _refresh(context),
+                child: ProductsList(_showOnlyFavorites)),
       ),
     );
   }

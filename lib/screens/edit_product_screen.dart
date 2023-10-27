@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopapp/main.dart';
-
 import '../providers/product.dart';
 import '../providers/products.dart';
 
@@ -100,6 +98,7 @@ class EditProductScreenState extends State<EditProductScreen> {
       await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } catch (error) {
+      // ignore: use_build_context_synchronously
       await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(

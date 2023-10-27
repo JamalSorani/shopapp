@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/main.dart';
 import 'package:shopapp/screens/create_product_screen.dart';
-import '../providers/product.dart';
 import '../providers/products.dart';
 import '../widgets/user_product_item.dart';
 import '../widgets/app_drawer.dart';
@@ -68,7 +67,7 @@ class UserProductsScreen extends StatelessWidget {
             ),
           ],
         ),
-        drawer: AppDrawer(),
+        drawer: const AppDrawer(),
         body: FutureBuilder(
           future: _refresh(context),
           builder: (ctx, snapshot) =>

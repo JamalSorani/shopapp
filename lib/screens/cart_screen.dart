@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopapp/main.dart';
 import 'package:shopapp/providers/products.dart';
-
 import '../providers/cart.dart' show Cart;
-import '../providers/product.dart';
 import '../widgets/cart_item.dart';
 import '../providers/orders.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
-
   const CartScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
@@ -39,6 +34,7 @@ class CartScreen extends StatelessWidget {
                   Chip(
                     label: Text(
                       '\$${cart.totalAmount.toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.white),
                     ),
                     backgroundColor: color,
                   ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 import '../models/http_exception.dart';
@@ -17,11 +18,8 @@ class Products with ChangeNotifier {
   }
 
   Color color = Colors.indigo;
-  // get color {
-  //   return _color;
-  // }
 
-  void updateColor(Color newColor) {
+  void updateColor(Color newColor) async {
     color = newColor;
     notifyListeners();
   }

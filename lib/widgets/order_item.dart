@@ -31,9 +31,11 @@ class OrderItemState extends State<OrderItem> {
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
-                setState(() {
-                  _expanded = !_expanded;
-                });
+                setState(
+                  () {
+                    _expanded = !_expanded;
+                  },
+                );
               },
             ),
           ),
